@@ -48,16 +48,18 @@ class FileContextReader(tk.Tk):
         ttk.Checkbutton(options_frame, text='Read Subfolders', variable=self.include_subfolders).pack(anchor=tk.W)
         ttk.Checkbutton(options_frame, text='Categorize by Content', variable=self.create_categories).pack(anchor=tk.W)
 
-        # Progress
+        # Controls frame holds the start button so it is always visible
+        controls_frame = ttk.Frame(frame)
+        controls_frame.pack(fill=tk.X, pady=5)
+        ttk.Button(controls_frame, text='Start', command=self._start_thread).pack()
+
+        # Progress information
         progress_frame = ttk.LabelFrame(frame, text='Progress')
         progress_frame.pack(fill=tk.BOTH, expand=True, pady=5)
         self.progress = ttk.Progressbar(progress_frame, orient='horizontal', mode='determinate')
         self.progress.pack(fill=tk.X, padx=5, pady=5)
         self.log = tk.Text(progress_frame, height=10)
         self.log.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
-
-        # Start button
-        ttk.Button(frame, text='Start', command=self._start_thread).pack(pady=5)
 
     def _toggle_all(self):
         state = self.select_all_var.get()
